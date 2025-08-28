@@ -1,0 +1,21 @@
+
+  print("Escreve o num 1:")
+  x = io.read("*number")      
+  print("Escreve o num 2:")
+  y = io.read("*number")     
+  io.read() --limpando o \n
+  print("Por ultimo, escreva o operando:")
+  op = io.read()   
+  
+  if op == "+" then
+    print(x+y)
+  elseif op == "-" then
+    print(x-y)
+  elseif op == "*" then
+    print(x*y)
+  elseif op == "/" then
+    print(x/y)
+  else
+    print("ERRO")
+    print(op)
+  end
