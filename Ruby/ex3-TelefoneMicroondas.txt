@@ -1,0 +1,81 @@
+class MicroondasUnidade
+  def aquecer_por(segundos)
+    puts "A unidade de micro-ondas esta aquecendo por #{segundos} segundos..."
+    puts "E... Pronto!"
+  end
+end
+
+class DMail
+  attr_reader :conteudo, :hora_envio
+
+  def initialize(conteudo, hora_envio)
+    @conteudo = conteudo
+    @hora_envio = hora_envio
+  end
+
+  def to_s
+    "D-Mail enviado às #{@hora_envio}: #{@conteudo}"
+  end
+end
+
+class TelefoneDeMicroondas
+  def initialize
+    @unidade = MicroondasUnidade.new
+    @dmails = []
+  end
+
+  def enviar_dmail
+    print "Digite o conteúdo do D-Mail: "
+    conteudo = gets.chomp
+
+    print "Digite o horário de envio: "
+    hora_envio = gets.chomp
+
+    print "Por quantos segundos o micro-ondas deve aquecer? "
+    segundos = gets.chomp.to_i
+
+    @unidade.aquecer_por(segundos)
+
+    novo_dmail = DMail.new(conteudo, hora_envio)
+    @dmails << novo_dmail
+
+    puts "\n D-Mail enviado com sucesso!"
+  end
+
+  def listar_dmails(horario_corte)
+    puts "\nD-Mails apos #{horario_corte}:"
+    filtrados = @dmails.select { |d| d.hora_envio > horario_corte }
+
+    if filtrados.empty?
+      puts "Nenhum D-Mail encontrado após #{horario_corte}."
+    else
+      filtrados.each { |d| puts d }
+    end
+  end
+end
+
+# MAIN
+
+telefone = TelefoneDeMicroondas.new
+
+loop do
+  puts "\n1. Enviar D-Mail"
+  puts "2. Listar D-Mails após um horário"
+  puts "3. Sair"
+  print "Escolha uma opção: "
+  opcao = gets.chomp.to_i
+
+  case opcao
+  when 1
+    telefone.enviar_dmail
+  when 2
+    print "Digite o horario de corte: "
+    corte = gets.chomp
+    telefone.listar_dmails(corte)
+  when 3
+    puts "Encerrando programa..."
+    break
+  else
+    puts "Opção invalida! Tente novamente."
+  end
+end
